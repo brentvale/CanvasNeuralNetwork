@@ -35,7 +35,7 @@ Neuron.prototype = {
     if(this.level > 5){
       totalChildren = 1;
     } else {
-      totalChildren = Math.floor(Math.random() * 3) + 1;
+      totalChildren = Math.floor(Math.random() * 2) + 3;
     }
     
     for(var i = 0; i < totalChildren; i++){

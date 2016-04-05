@@ -69,21 +69,17 @@ Neural.prototype = {
     }
   },
   drawNeuralHead:function(temp, color){
-    if(color == "red"){
-      this.color = "red";
-    }
     this.ctx.beginPath(); 
     this.ctx.arc(temp.x,temp.y, temp.radius, 0, Math.PI*2); 
     this.ctx.closePath(); 
-    this.ctx.fillStyle = this.color; 
+    this.ctx.fillStyle = color || this.color; 
     this.ctx.fill(); 
   },
   createActionPotential:function(){
     var that = this;
-    setTimeout(function(){
-      debugger
+    setInterval(function(){
       that.propogateActionPotential(that.originNeuron)
-    }, 2000)
+    }, 30)
     // this.propogateActionPotential(this.originNeuron);
   },
   propogateActionPotential: function(currentNode){
@@ -92,8 +88,16 @@ Neural.prototype = {
     }
     var nextChildIndex = Math.floor(Math.random() * currentNode.childNeurons.length);
     var nextChild = currentNode.childNeurons[nextChildIndex];
-    debugger
-    this.drawNeuralHead(nextChild, "red");
+    setTimeout(function(){
+      that.drawPathToParent(nextChild, "#def0ff");
+      that.drawNeuralHead(nextChild, "#def0ff");
+    },60);
+    var that = this;
+    setTimeout(function(){
+      that.drawPathToParent(nextChild, "#424242");
+      that.drawNeuralHead(nextChild, "#424242");
+    },120);
+    this.propogateActionPotential(nextChild);
   }
   
 };

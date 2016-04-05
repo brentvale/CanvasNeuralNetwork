@@ -43,5 +43,5 @@ Neuron.prototype = {
       newChild.createChildren();
       this.childNeurons.push(newChild);
     }
-  }
+  },
 }

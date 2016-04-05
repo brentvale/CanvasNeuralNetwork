@@ -1,6 +1,7 @@
 var DELTAS = [[-1,0], [-1,1], [0,1], [1,1], [1,0], [1,-1], [0,-1], [-1,-1]];
 function Neural(options){
   this.ctx = options.context;
+  this.nodeNum = options.nodeNum;
   this.color = "#606060";
   WINDOW_WIDTH = options.width;
   WINDOW_HEIGHT = options.height;
@@ -12,16 +13,39 @@ function Neural(options){
 
 Neural.prototype = {
   clearScreen: function(){
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    this.ctx.fillStyle = "black";
-    this.ctx.fill();
+    if(this.nodeNum === 0){
+      this.ctx.beginPath();
+      this.ctx.rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+      this.ctx.fillStyle = "black";
+      this.ctx.fill();
+    }
   },
   createNeurons: function(){
-    //center neuron
-    var firstNeuron = new Neuron({x:(WINDOW_WIDTH/2), y:(WINDOW_HEIGHT/2), level: 0});
-    this.originNeuron = firstNeuron;
+    //4 origins from where action potentials start
+    var thisX = WINDOW_WIDTH/3;
+    var thisY = WINDOW_HEIGHT/3;
+
+    switch(this.nodeNum){
+      case 0:
+        thisX = thisX;
+        thisY = thisY;
+        break;
+      case 1:
+        thisX = thisX*2;
+        thisY = thisY;
+        break;
+      case 2:
+        thisX = thisX*2;
+        thisY = thisY*2;
+        break;
+      case 3:
+        thisX = thisX;
+        thisY = thisY*2;
+        break;
+    }
     
+    var firstNeuron = new Neuron({x:thisX, y:thisY, level: 0});
+    this.originNeuron = firstNeuron;
     
     //create level one with 6 branches (selected at random)
     this.neuronsArray.push(new Neuron({parentNeuron: firstNeuron, level: 1, deltas: DELTAS[0]}));
@@ -59,28 +83,31 @@ Neural.prototype = {
       this.drawPathToParent(temp);
     }
   },
-  drawPathToParent: function(temp, color){
+  drawPathToParent: function(temp, color, line){
     if(temp.parentNeuron){
       this.ctx.beginPath();
       this.ctx.moveTo(temp.x,temp.y);
       this.ctx.lineTo(temp.parentNeuron.x,temp.parentNeuron.y);
       this.ctx.strokeStyle = color || temp.color;
+      this.ctx.lineWidth = line || 2;
       this.ctx.stroke();
     }
   },
-  drawNeuralHead:function(temp, color){
+  drawNeuralHead:function(temp, color, radius){
+    var tempRadius = radius || temp.radius;
     this.ctx.beginPath(); 
-    this.ctx.arc(temp.x,temp.y, temp.radius, 0, Math.PI*2); 
+    this.ctx.arc(temp.x,temp.y, tempRadius, 0, Math.PI*2); 
     this.ctx.closePath(); 
     this.ctx.fillStyle = color || this.color; 
     this.ctx.fill(); 
   },
   createActionPotential:function(){
     var that = this;
-    setInterval(function(){
-      that.propogateActionPotential(that.originNeuron)
-    }, 30)
-    // this.propogateActionPotential(this.originNeuron);
+    setTimeout(function(){
+      setInterval(function(){
+        that.propogateActionPotential(that.originNeuron)
+      }, 600);
+    }, 500);
   },
   propogateActionPotential: function(currentNode){
     if(currentNode.childNeurons.length == 0){
@@ -88,16 +115,19 @@ Neural.prototype = {
     }
     var nextChildIndex = Math.floor(Math.random() * currentNode.childNeurons.length);
     var nextChild = currentNode.childNeurons[nextChildIndex];
-    setTimeout(function(){
-      that.drawPathToParent(nextChild, "#def0ff");
-      that.drawNeuralHead(nextChild, "#def0ff");
-    },60);
+    
     var that = this;
+    
     setTimeout(function(){
-      that.drawPathToParent(nextChild, "#424242");
-      that.drawNeuralHead(nextChild, "#424242");
-    },120);
-    this.propogateActionPotential(nextChild);
+      that.drawPathToParent(nextChild, "#def0ff", 1);
+      that.drawNeuralHead(nextChild, "#def0ff", 2);
+      that.propogateActionPotential(nextChild);
+    },30);
+    setTimeout(function(){
+      that.drawPathToParent(nextChild, "#424242", 2);
+      that.drawNeuralHead(nextChild, "#424242", 3);
+    },40);
+    
   }
   
 };

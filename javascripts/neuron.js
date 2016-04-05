@@ -1,6 +1,6 @@
 function Neuron(options){
   this.color = options.color || "#424242";
-  this.radius = options.radius || 2;
+  this.radius = options.radius || 3;
   this.level = options.level;
   this.childNeurons = [];
   this.parentNeuron = options.parentNeuron || null;
@@ -35,7 +35,7 @@ Neuron.prototype = {
     if(this.level > 5){
       totalChildren = 1;
     } else {
-      totalChildren = Math.floor(Math.random() * 2) + 3;
+      totalChildren = Math.floor(Math.random() * 2) + 1;
     }
     
     for(var i = 0; i < totalChildren; i++){

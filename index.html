@@ -25,7 +25,9 @@
       canvas.height = windowHeight;
       
       var c = canvas.getContext('2d'); 
-      var neurons = new Neural({context:c, width:windowWidth, height:windowHeight});
+      for(var i = 0; i < 4; i++){
+        new Neural({context:c, width:windowWidth, height:windowHeight, nodeNum:i});
+      }
       
     </script>
   </body>

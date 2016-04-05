@@ -1,1 +1,33 @@
-CanvasNeuralNetwork
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Neurons</title>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <script src="javascripts/neural.js"></script>
+    <script src="javascripts/neuron.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  </head>
+
+  <body>
+    
+    <canvas id="neurons" width="900" height="480"></canvas>
+  
+    
+    <script>
+      document.body.style.overflow = "hidden";
+    
+      var windowWidth = window.innerWidth;
+      var windowHeight = window.innerHeight;
+      
+      var canvas = document.getElementById('neurons'); 
+      canvas.width = windowWidth;
+      canvas.height = windowHeight;
+      
+      var c = canvas.getContext('2d'); 
+      var neurons = new Neural({context:c, width:windowWidth, height:windowHeight});
+      
+    </script>
+  </body>
+</html>

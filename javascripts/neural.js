@@ -60,7 +60,6 @@ Neural.prototype = {
       this.ctx.beginPath();
       this.ctx.moveTo(temp.x,temp.y);
       this.ctx.lineTo(temp.parentNeuron.x,temp.parentNeuron.y);
-      // this.ctx.quadraticCurveTo(temp.parentNeuron.x, 10, 388, 10, 388, temp.parentNeuron.y);
       this.ctx.strokeStyle = temp.color;
       this.ctx.stroke();
     }

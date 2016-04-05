@@ -1,0 +1,6 @@
+function Neuron(){
+  
+};
+Neuron.prototype = {
+  
+}

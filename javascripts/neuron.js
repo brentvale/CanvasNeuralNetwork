@@ -1,28 +1,15 @@
 function Neuron(options){
-  this.ctx = options.context;
   this.color = options.color || "white";
   this.radius = options.radius || 2;
   this.level = options.level;
+  this.childNeurons = [];
   this.parentNeuron = options.parentNeuron || null;
   this.deltas = options.deltas;
   this.y = options.y || this.setYFromParent();
   this.x = options.x || this.setXFromParent();
 };
 Neuron.prototype = {
-  drawNeuralHead: function(){
-    this.ctx.beginPath(); 
-    this.ctx.arc(this.x,this.y, this.radius, 0, Math.PI*2); 
-    this.ctx.closePath(); 
-    this.ctx.fillStyle = this.color; 
-    this.ctx.fill(); 
-  },
-  drawPathToParent: function(){
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x,this.y);
-    this.ctx.lineTo(this.parentNeuron.x,this.parentNeuron.y);
-    this.ctx.strokeStyle = this.color;
-    this.ctx.stroke();
-  },
+  
   setXFromParent: function(){
     //[-1, 0]
     var deltaX = this.parentNeuron.x + 50*this.deltas[0] + Math.floor(Math.random() * 20);
@@ -32,4 +19,19 @@ Neuron.prototype = {
     var deltaY = this.parentNeuron.y + 50*this.deltas[1] + Math.floor(Math.random() * 20);
     return deltaY;
   },
+  addChild: function(child){
+    this.childNeurons.push(child);
+  },
+  createChildren: function(){
+    if(this.level == 10){
+      return;
+    };
+    var children = [];
+    //create between 1 and 8 children
+    var totalChildren = Math.floor(Math.random() * 2);
+    for(var i = 0; i < totalChildren; i++){
+      var newChild = new Neuron({parentNeuron: this, level: (this.level + 1), deltas: this.deltas});
+      this.addChild(newChild);
+    }
+  }
 }

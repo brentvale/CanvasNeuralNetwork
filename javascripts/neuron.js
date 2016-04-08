@@ -7,6 +7,7 @@ function Neuron(options){
   this.deltas = options.deltas;
   this.y = options.y || this.setYFromParent();
   this.x = options.x || this.setXFromParent();
+  this.activeActionPotential = false;
 };
 Neuron.prototype = {
   

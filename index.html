@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><a href="index.html" id="" title="index">index</a>
 <html>
   <head>
     <title>Neurons</title>
@@ -12,10 +12,10 @@
 
   <body>
     
+    <div style="height:500px"></div>
     <canvas id="neurons" width="900" height="480"></canvas>
-  
+    <div style="height:500px"></div>
     <script>
-      document.body.style.overflow = "hidden";
     
       var windowWidth = window.innerWidth;
       var windowHeight = window.innerHeight;
@@ -25,9 +25,8 @@
       canvas.height = windowHeight;
       
       var c = canvas.getContext('2d'); 
-      for(var i = 0; i < 4; i++){
-        new Neural({context:c, width:windowWidth, height:windowHeight, nodeNum:i});
-      }
+      
+      new Neural({context:c, width:windowWidth, height:windowHeight});
       
     </script>
   </body>

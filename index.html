@@ -3,7 +3,7 @@
   <head>
     <title>Neurons</title>
     <link rel="stylesheet" href="css/main.css">
-    
+    <script src="javascripts/neural_network.js"></script>
     <script src="javascripts/neural.js"></script>
     <script src="javascripts/neuron.js"></script>
     
@@ -26,7 +26,7 @@
       
       var c = canvas.getContext('2d'); 
       
-      new Neural({context:c, width:windowWidth, height:windowHeight});
+      new NeuralNetwork({context:c, width:windowWidth, height:windowHeight});
       
     </script>
   </body>

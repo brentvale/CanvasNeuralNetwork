@@ -1,48 +1,17 @@
 var DELTAS = [[-1,0], [-1,1], [0,1], [1,1], [1,0], [1,-1], [0,-1], [-1,-1]];
 function Neural(options){
+  this.thisX = options.thisX;
+  this.thisY = options.thisY;
+  this.color = options.color;
   this.ctx = options.context;
-  this.nodeNum = options.nodeNum;
-  this.color = "#606060";
-  WINDOW_WIDTH = options.width;
-  WINDOW_HEIGHT = options.height;
   this.neuronsArray = [];
-  this.clearScreen();
   this.createNeurons();
-  this.tick();
 };
 
 Neural.prototype = {
-  clearScreen: function(){
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    this.ctx.fillStyle = "black";
-    this.ctx.fill();
-  },
+  
   createNeurons: function(){
-    //4 origins from where action potentials start
-    var thisX = WINDOW_WIDTH/3;
-    var thisY = WINDOW_HEIGHT/3;
-
-    switch(this.nodeNum){
-      case 0:
-        thisX = thisX;
-        thisY = thisY;
-        break;
-      case 1:
-        thisX = thisX*2;
-        thisY = thisY;
-        break;
-      case 2:
-        thisX = thisX*2;
-        thisY = thisY*2;
-        break;
-      case 3:
-        thisX = thisX;
-        thisY = thisY*2;
-        break;
-    }
-    
-    var firstNeuron = new Neuron({x:thisX, y:thisY, level: 0});
+    var firstNeuron = new Neuron({x:this.thisX, y:this.thisY, level: 0});
     this.originNeuron = firstNeuron;
     //currentActionPotentialNode, use to propogate potential
     this.currentActionPotentialNode = firstNeuron;
@@ -113,18 +82,8 @@ Neural.prototype = {
       this.currentActionPotentialNode = this.originNeuron;
     } else {
       this.currentActionPotentialNode = nextChild;
-    }
-      
+    }  
   },
-  tick: function(){
-    var that = this;
-    this.tickInterval = setInterval(function(){
-      that.clearScreen();
-      //child neurons drawn as a function of parent neurons
-      that.drawParentNeurons();
-      that.propogateActionPotential();
-    }, 50)
-  }
   
 };
 

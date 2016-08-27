@@ -59,17 +59,39 @@ Neural.prototype = {
       this.ctx.moveTo(tempNode.x,tempNode.y);
       this.ctx.lineTo(tempNode.parentNeuron.x,tempNode.parentNeuron.y);
       this.ctx.strokeStyle = color || tempNode.color;
-      this.ctx.lineWidth = line || 2;
+      this.ctx.lineWidth = line || 1;
       this.ctx.stroke();
     }
   },
   drawNeuralHead:function(temp, color, radius){
-    var tempRadius = radius || temp.radius;
-    this.ctx.beginPath(); 
-    this.ctx.arc(temp.x,temp.y, tempRadius, 0, Math.PI*2); 
-    this.ctx.closePath(); 
-    this.ctx.fillStyle = color || this.color; 
-    this.ctx.fill(); 
+    // var tempRadius = radius || temp.radius;
+    
+    //*****draw Neural Head with background neuron image*****
+    this.ctx.drawImage(NEURAL_BODY_IMAGE, temp.x, temp.y, 10, 10);
+    
+    //*****draw Neural Head with radial gradient*****
+    
+    // Radii of the white glow.
+    // var innerRadius = 5,
+//         outerRadius = 10,
+//         // Radius of the entire circle.
+//         radius = 8;
+//
+//     var gradient = this.ctx.createRadialGradient(temp.x, temp.y, innerRadius, temp.x, temp.y, outerRadius);
+//     gradient.addColorStop(0, 'white');
+//*****/     gradient.addColorStop(1, 'blue');
+//
+//     this.ctx.arc(temp.x, temp.y, radius, 0, 2 * Math.PI);
+//
+//     this.ctx.fillStyle = "black";
+//     this.ctx.fill();
+    
+    //*****draw Neural Head with simple circles*****
+    // this.ctx.beginPath();
+//     this.ctx.arc(temp.x,temp.y, tempRadius, 0, Math.PI*2);
+//     this.ctx.closePath();
+//     this.ctx.fillStyle = color || this.color;
+//     this.ctx.fill();
   },
   propogateActionPotential: function(){
     this.currentActionPotentialNode.color = "#424242"

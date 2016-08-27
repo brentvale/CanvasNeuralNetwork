@@ -1,3 +1,4 @@
+var NEURAL_BODY_IMAGE;
 function NeuralNetwork(options){
   this.ctx = options.context;
   this.color = "#606060";
@@ -6,9 +7,15 @@ function NeuralNetwork(options){
   WINDOW_HEIGHT = options.height;
   this.createNeurals();
   this.tick();
+  this.createAndLoadImage();
 };
 
 NeuralNetwork.prototype = {
+  createAndLoadImage: function(){
+    var img = new Image();
+    img.src = "images/neuron_body_50x50.png";
+    NEURAL_BODY_IMAGE = img;
+  },
   clearScreen: function(){
     this.ctx.beginPath();
     this.ctx.rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -23,11 +30,11 @@ NeuralNetwork.prototype = {
     //quadrant 1
     this.neurals.push(new Neural({thisX: thisX, thisY: thisY, context: this.ctx, color: this.color}));
     //quadrant 2
-    this.neurals.push(new Neural({thisX: thisX*2, thisY: thisY, context: this.ctx, color: this.color}));
-    //quadrant 3
-    this.neurals.push(new Neural({thisX: thisX, thisY: thisY*2, context: this.ctx, color: this.color}));
-    //quadrant 4
-    this.neurals.push(new Neural({thisX: thisX*2, thisY: thisY*2, context: this.ctx, color: this.color}));
+    // this.neurals.push(new Neural({thisX: thisX*2, thisY: thisY, context: this.ctx, color: this.color}));
+//     //quadrant 3
+//     this.neurals.push(new Neural({thisX: thisX, thisY: thisY*2, context: this.ctx, color: this.color}));
+//     //quadrant 4
+//     this.neurals.push(new Neural({thisX: thisX*2, thisY: thisY*2, context: this.ctx, color: this.color}));
   },
   tick: function(){
     var that = this;
@@ -37,7 +44,7 @@ NeuralNetwork.prototype = {
         that.neurals[i].drawParentNeurons();
         that.neurals[i].propogateActionPotential();
       }
-    }, 50)
+    }, 500)
   }
 };
 
